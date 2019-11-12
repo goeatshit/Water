@@ -1,11 +1,10 @@
 package com.fju.water;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -19,8 +18,9 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
     private TextView mon;
     private TextView nextmon;
-    int mon_money;
-    int nextmon_money;
+    double mon_money;
+    double nextmon_money;
+    private TextView button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,61 +30,70 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         mon = findViewById(R.id.month);
         nextmon = findViewById(R.id.next);
-        try {
-            mon_money = Integer.parseInt(mon.toString());
-            nextmon_money = Integer.parseInt(nextmon.toString());
-
-        }catch(Exception E){
-            E.printStackTrace();
-        }
-
-
+        button = findViewById(R.id.butt);
         Log.d("MainActivity", "water");
 
-    FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
 
-        }
-    });
-}
-
-        public void degree (View view){
-        new AlertDialog.Builder(MainActivity.this)
-                .setTitle("You got a message")
-                .setMessage("Let's calculate your  next monthly water usage!")
-                .setPositiveButton("SURE", null)
-                .show();
-        if (TextUtils.isEmpty(mon.toString()) ) {
-            if (nextmon_money >= 1 && nextmon_money <= 20) {
-                double degree = nextmon_money * 7.35;
-            } else if (nextmon_money >= 21 && nextmon_money <= 60) {
-                double degree = nextmon_money * 9.45 - 42;
-            } else if (nextmon_money >= 61 && nextmon_money <= 100) {
-                double degree = nextmon_money * 11.55 - 168;
-            } else if (nextmon_money >= 101) {
-                double degree = nextmon_money * 12.075 - 220.5;
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                degree();
             }
-        } else if (TextUtils.isEmpty(nextmon.toString()) ) {
-            new AlertDialog.Builder(MainActivity.this)
-                    .setTitle("You got a message")
-                    .setMessage("Let's calculate your monthly water usage!")
-                    .setPositiveButton("SURE", null)
-                    .show();
-            if (mon_money >= 1 && mon_money <= 10) {
-                double degree = mon_money * 7.35;
-            } else if (mon_money >= 11 && mon_money <= 30) {
-                double degree = mon_money * 9.45 - 21;
-            } else if (mon_money >= 31 && mon_money <= 50) {
-                double degree = mon_money * 11.55 - 84;
-            } else if (mon_money >= 51) {
-                double degree = mon_money * 12.075 - 110.25;
-            }
-        }
+        });
     }
 
+        public void degree () {
+            String string = mon.getText().toString();
+            String nextstring = nextmon.getText().toString();
+            if (!TextUtils.isEmpty(string)) {
+                double degree = Double.parseDouble(mon.getText().toString());
+                if (degree >= 1 && degree <= 10) {
+                    mon_money = degree * 7.35;
+                } else if (degree >= 11 && degree <= 30) {
+                    mon_money = degree * 9.45 - 21;
+                } else if (degree >= 31 && degree <= 50) {
+                    mon_money = degree * 11.55 - 84;
+                } else if (degree >= 51) {
+                    mon_money = degree * 12.075 - 110.25;
+                }
 
+ /*               new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("You got a message")
+                        .setMessage("Let's calculate your monthly water usage!" + "Fee"+":"+mon_money)
+                        .setPositiveButton("SURE", null)
+                        .show();
+ */
+
+            } else if (!TextUtils.isEmpty(nextstring)) {
+                double degree = Double.parseDouble(nextmon.getText().toString());
+                if (degree >= 1 && degree <= 20) {
+                    nextmon_money = degree * 7.35;
+                } else if (degree >= 21 && degree <= 60) {
+                    nextmon_money = degree * 9.45 - 42;
+                } else if (degree >= 61 && degree <= 100) {
+                    nextmon_money = degree * 11.55 - 168;
+                } else if (degree >= 101) {
+                    nextmon_money = degree * 12.075 - 220.5;
+                }
+/*                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("You got a message")
+                        .setMessage("Let's calculate your next monthly water usage!" + "Fee"+":"+nextmon_money)
+                        .setPositiveButton("SURE", null)
+                        .show();
+            } else if (TextUtils.isEmpty(string) && TextUtils.isEmpty(nextstring)) {
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("You got a message")
+                        .setMessage("You idiot")
+                        .setPositiveButton("OK", null)
+                        .show();
+
+            }
+
+ */
+            }
+            Intent intent = new Intent(this, ResultActivity.class);
+            startActivity(intent);
+        }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
