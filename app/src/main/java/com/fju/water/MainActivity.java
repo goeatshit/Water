@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView nextmon;
     double mon_money;
     double nextmon_money;
-    private TextView button;
+    Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         nextmon = findViewById(R.id.next);
         button = findViewById(R.id.butt);
         Log.d("MainActivity", "water");
-
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
                 } else if (degree >= 51) {
                     mon_money = degree * 12.075 - 110.25;
                 }
+                Intent intent = new Intent(this, ResultActivity.class);
+                intent.putExtra("MonthWaterMoney",mon_money);
+                startActivity(intent);
 
  /*               new AlertDialog.Builder(MainActivity.this)
                         .setTitle("You got a message")
@@ -91,8 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
  */
             }
-            Intent intent = new Intent(this, ResultActivity.class);
-            startActivity(intent);
+
         }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
