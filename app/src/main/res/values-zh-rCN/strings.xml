@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">查水表</string>
+    <string name="Water_Fee">您的水费：</string>
+    <string name="action_settings">设定</string>
+    <string name="every_other_month">隔月查表</string>
+    <string name="monthly">每月查表</string>
+    <string name="result">你瞅啥，小心我来你家</string>
+    <string name="water_fee">水费</string>
+</resources>

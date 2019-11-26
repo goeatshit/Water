@@ -14,14 +14,20 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = MainActivity.class.getSimpleName();
+    private Switch swch;
     private TextView mon;
     private TextView nextmon;
     double mon_money;
     double nextmon_money;
     Button button;
+    boolean isNext = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +36,10 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mon = findViewById(R.id.month);
-        nextmon = findViewById(R.id.next);
+    //     nextmon = findViewById(R.id.next);
         button = findViewById(R.id.butt);
-        Log.d("MainActivity", "water");
+        swch = findViewById(R.id.sw);
+        Log.d(TAG, "water");
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,11 +47,20 @@ public class MainActivity extends AppCompatActivity {
                 degree();
             }
         });
+
+        swch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                isNext = isChecked;
+                TextView ty = findViewById(R.id.type);
+                ty.setText(isNext?getString(R.string.every_other_month):getString(R.string.monthly));
+            }
+        });
     }
 
         public void degree () {
             String string = mon.getText().toString();
-            String nextstring = nextmon.getText().toString();
+     //      String nextstring = nextmon.getText().toString();
             if (!TextUtils.isEmpty(string)) {
                 double degree = Double.parseDouble(mon.getText().toString());
                 if (degree >= 1 && degree <= 10) {
@@ -67,17 +83,17 @@ public class MainActivity extends AppCompatActivity {
                         .show();
  */
 
-            } else if (!TextUtils.isEmpty(nextstring)) {
-                double degree = Double.parseDouble(nextmon.getText().toString());
-                if (degree >= 1 && degree <= 20) {
-                    nextmon_money = degree * 7.35;
-                } else if (degree >= 21 && degree <= 60) {
-                    nextmon_money = degree * 9.45 - 42;
-                } else if (degree >= 61 && degree <= 100) {
-                    nextmon_money = degree * 11.55 - 168;
-                } else if (degree >= 101) {
-                    nextmon_money = degree * 12.075 - 220.5;
-                }
+//            } else if (!TextUtils.isEmpty(nextstring)) {
+//                double degree = Double.parseDouble(nextmon.getText().toString());
+//                if (degree >= 1 && degree <= 20) {
+//                    nextmon_money = degree * 7.35;
+//                } else if (degree >= 21 && degree <= 60) {
+//                    nextmon_money = degree * 9.45 - 42;
+//                } else if (degree >= 61 && degree <= 100) {
+//                    nextmon_money = degree * 11.55 - 168;
+//                } else if (degree >= 101) {
+//                    nextmon_money = degree * 12.075 - 220.5;
+//                }
 /*                new AlertDialog.Builder(MainActivity.this)
                         .setTitle("You got a message")
                         .setMessage("Let's calculate your next monthly water usage!" + "Fee"+":"+nextmon_money)
