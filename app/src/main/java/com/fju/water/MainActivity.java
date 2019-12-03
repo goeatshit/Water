@@ -13,8 +13,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -25,8 +27,12 @@ public class MainActivity extends AppCompatActivity {
     private TextView nextmon;
     double mon_money;
     double nextmon_money;
-    Button button;
+    private Button button;
     boolean isNext = false;
+    private Spinner spinn;
+
+
+
 
 
     @Override
@@ -35,11 +41,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        Log.d(TAG, "onCreate:");
         mon = findViewById(R.id.month);
-    //     nextmon = findViewById(R.id.next);
+        spinn = findViewById(R.id.sp);
+        //  nextmon = findViewById(R.id.next);
         button = findViewById(R.id.butt);
         swch = findViewById(R.id.sw);
-        Log.d(TAG, "water");
+   //  Log.d(TAG, "water");
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +64,52 @@ public class MainActivity extends AppCompatActivity {
                 ty.setText(isNext?getString(R.string.every_other_month):getString(R.string.monthly));
             }
         });
+        spinn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG,getResources().getStringArray(R.array.cities)[position]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy:");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause:");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume:");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop:");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d(TAG, "onRestart:");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart:");
     }
 
         public void degree () {
